@@ -52,96 +52,114 @@
             </div>
             <section class="routine-section routine-section-pending">
                 <div class="section-pending">
-                    <svg class="section-heading__line" viewBox="0 0 372 28" preserveAspectRatio="none" aria-hidden="true"><path d="M0 25 H65 L95 5 H372" /></svg>
+                    <svg class="section-heading__line" viewBox="0 0 372 28" preserveAspectRatio="none"
+                        aria-hidden="true">
+                        <path d="M0 25 H65 L95 5 H372" />
+                    </svg>
                     <p class="section-title">미완료</p>
-                    <p class="section-count" aria-live="polite" aria-atomic="true">총 <span data-pending-count>4</span>개</p>
+                    <p class="section-count" aria-live="polite" aria-atomic="true">총 <span data-pending-count>4</span>개
+                    </p>
                 </div>
                 <!-- 임시 목록: 추후 Service 데이터로 렌더링 -->
                 <ul class="routine-list" id="pending-list">
                     <li class="routine-card" data-routine-id="routine-1">
-                        <button type="button" class="routine-card__complete" data-action="complete-routine" aria-label="물 마시기 완료하기">
+                        <button type="button" class="routine-card__complete" data-action="complete-routine"
+                            aria-label="물 마시기 완료하기">
                             <img class="routine-card__icon" src="assets/icons/routine-icon.png" alt="">
                             <span class="routine-card__title">물 마시기</span>
                             <span class="routine-card__schedule">매일 · 오전</span>
                         </button>
-                        <button type="button" class="routine-card__menu" data-action="open-routine-menu" aria-label="물 마시기 더보기"><span aria-hidden="true">···</span></button>
+                        <button type="button" class="routine-card__menu" data-action="open-routine-menu"
+                            aria-label="물 마시기 더보기"><span aria-hidden="true">···</span></button>
                     </li>
                     <li class="routine-card" data-routine-id="routine-2">
-                        <button type="button" class="routine-card__complete" data-action="complete-routine" aria-label="책 읽기 완료하기">
+                        <button type="button" class="routine-card__complete" data-action="complete-routine"
+                            aria-label="책 읽기 완료하기">
                             <img class="routine-card__icon" src="assets/icons/routine-icon.png" alt="">
                             <span class="routine-card__title">책 읽기</span>
                             <span class="routine-card__schedule">월, 수, 금 · 종일</span>
                         </button>
-                        <button type="button" class="routine-card__menu" data-action="open-routine-menu" aria-label="책 읽기 더보기"><span aria-hidden="true">···</span></button>
+                        <button type="button" class="routine-card__menu" data-action="open-routine-menu"
+                            aria-label="책 읽기 더보기"><span aria-hidden="true">···</span></button>
                     </li>
                     <li class="routine-card" data-routine-id="routine-3">
-                        <button type="button" class="routine-card__complete" data-action="complete-routine" aria-label="정기검진 완료하기">
+                        <button type="button" class="routine-card__complete" data-action="complete-routine"
+                            aria-label="정기검진 완료하기">
                             <img class="routine-card__icon" src="assets/icons/routine-icon.png" alt="">
                             <span class="routine-card__title">정기검진</span>
                             <span class="routine-card__schedule">매월 1일 · 오후</span>
                         </button>
-                        <button type="button" class="routine-card__menu" data-action="open-routine-menu" aria-label="정기검진 더보기"><span aria-hidden="true">···</span></button>
+                        <button type="button" class="routine-card__menu" data-action="open-routine-menu"
+                            aria-label="정기검진 더보기"><span aria-hidden="true">···</span></button>
                     </li>
                     <li class="routine-card" data-routine-id="routine-4">
-                        <button type="button" class="routine-card__complete" data-action="complete-routine" aria-label="등산 가기 완료하기">
+                        <button type="button" class="routine-card__complete" data-action="complete-routine"
+                            aria-label="등산 가기 완료하기">
                             <img class="routine-card__icon" src="assets/icons/routine-icon.png" alt="">
                             <span class="routine-card__title">등산 가기</span>
                             <span class="routine-card__schedule">주말 · 종일</span>
                         </button>
-                        <button type="button" class="routine-card__menu" data-action="open-routine-menu" aria-label="등산 가기 더보기"><span aria-hidden="true">···</span></button>
+                        <button type="button" class="routine-card__menu" data-action="open-routine-menu"
+                            aria-label="등산 가기 더보기"><span aria-hidden="true">···</span></button>
                     </li>
                 </ul>
             </section>
             <section class="routine-section routine-section-completed">
                 <div class="section-completed">
-                    <svg class="section-heading__line" viewBox="0 0 372 28" preserveAspectRatio="none" aria-hidden="true"><path d="M0 25 H65 L95 5 H372" /></svg>
+                    <svg class="section-heading__line" viewBox="0 0 372 28" preserveAspectRatio="none"
+                        aria-hidden="true">
+                        <path d="M0 25 H65 L95 5 H372" />
+                    </svg>
                     <p class="section-title">완료</p>
-                    <p class="section-count" aria-live="polite" aria-atomic="true">총 <span data-completed-count>4</span>개</p>
+                    <p class="section-count" aria-live="polite" aria-atomic="true">총 <span
+                            data-completed-count>4</span>개</p>
                     <!-- 펼친 상태: aria-expanded="true", 기호 −. 접힌 상태: false, 기호 +, 목록에 hidden 추가 -->
-                    <button
-                        type="button"
-                        class="section-toggle"
-                        data-action="toggle-completed-list"
-                        aria-expanded="true"
-                        aria-controls="completed-list"
-                        aria-label="완료 루틴 목록 접기"
-                    >
+                    <button type="button" class="section-toggle" data-action="toggle-completed-list"
+                        aria-expanded="true" aria-controls="completed-list" aria-label="완료 루틴 목록 접기">
                         <span class="section-toggle__icon" data-completed-toggle-icon aria-hidden="true">−</span>
                     </button>
                 </div>
                 <!-- 임시 목록: 추후 Service 데이터로 렌더링 -->
                 <ul class="routine-list" id="completed-list">
                     <li class="routine-card" data-routine-id="routine-5">
-                        <button type="button" class="routine-card__complete" data-action="uncomplete-routine" aria-label="물 마시기 완료 취소하기">
+                        <button type="button" class="routine-card__complete" data-action="uncomplete-routine"
+                            aria-label="물 마시기 완료 취소하기">
                             <img class="routine-card__icon" src="assets/icons/routine-icon.png" alt="">
                             <span class="routine-card__title">물 마시기</span>
                             <span class="routine-card__schedule">매일 · 오전</span>
                         </button>
-                        <button type="button" class="routine-card__menu" data-action="open-routine-menu" aria-label="물 마시기 더보기"><span aria-hidden="true">···</span></button>
+                        <button type="button" class="routine-card__menu" data-action="open-routine-menu"
+                            aria-label="물 마시기 더보기"><span aria-hidden="true">···</span></button>
                     </li>
                     <li class="routine-card" data-routine-id="routine-6">
-                        <button type="button" class="routine-card__complete" data-action="uncomplete-routine" aria-label="책 읽기 완료 취소하기">
+                        <button type="button" class="routine-card__complete" data-action="uncomplete-routine"
+                            aria-label="책 읽기 완료 취소하기">
                             <img class="routine-card__icon" src="assets/icons/routine-icon.png" alt="">
                             <span class="routine-card__title">책 읽기</span>
                             <span class="routine-card__schedule">월, 수, 금 · 종일</span>
                         </button>
-                        <button type="button" class="routine-card__menu" data-action="open-routine-menu" aria-label="책 읽기 더보기"><span aria-hidden="true">···</span></button>
+                        <button type="button" class="routine-card__menu" data-action="open-routine-menu"
+                            aria-label="책 읽기 더보기"><span aria-hidden="true">···</span></button>
                     </li>
                     <li class="routine-card" data-routine-id="routine-7">
-                        <button type="button" class="routine-card__complete" data-action="uncomplete-routine" aria-label="정기검진 완료 취소하기">
+                        <button type="button" class="routine-card__complete" data-action="uncomplete-routine"
+                            aria-label="정기검진 완료 취소하기">
                             <img class="routine-card__icon" src="assets/icons/routine-icon.png" alt="">
                             <span class="routine-card__title">정기검진</span>
                             <span class="routine-card__schedule">매월 1일 · 오후</span>
                         </button>
-                        <button type="button" class="routine-card__menu" data-action="open-routine-menu" aria-label="정기검진 더보기"><span aria-hidden="true">···</span></button>
+                        <button type="button" class="routine-card__menu" data-action="open-routine-menu"
+                            aria-label="정기검진 더보기"><span aria-hidden="true">···</span></button>
                     </li>
                     <li class="routine-card" data-routine-id="routine-8">
-                        <button type="button" class="routine-card__complete" data-action="uncomplete-routine" aria-label="등산 가기 완료 취소하기">
+                        <button type="button" class="routine-card__complete" data-action="uncomplete-routine"
+                            aria-label="등산 가기 완료 취소하기">
                             <img class="routine-card__icon" src="assets/icons/routine-icon.png" alt="">
                             <span class="routine-card__title">등산 가기</span>
                             <span class="routine-card__schedule">주말 · 종일</span>
                         </button>
-                        <button type="button" class="routine-card__menu" data-action="open-routine-menu" aria-label="등산 가기 더보기"><span aria-hidden="true">···</span></button>
+                        <button type="button" class="routine-card__menu" data-action="open-routine-menu"
+                            aria-label="등산 가기 더보기"><span aria-hidden="true">···</span></button>
                     </li>
                 </ul>
             </section>
@@ -149,6 +167,8 @@
         <!-- nav bottom -->
         <nav id="nav-bottom"></nav>
     </div>
+
+    <div class="dim"></div>
 </body>
 
 </html>

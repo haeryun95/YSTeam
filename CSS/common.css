@@ -1,38 +1,49 @@
 @charset "uft-8";
-@import url('font.css');
+@import url("font.css");
 
 /* reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: 0;
 }
 
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 a {
-    text-decoration: none;
-    color: #333;
+  text-decoration: none;
+  color: #333;
 }
 
 img {
-    display: block;
+  display: block;
 }
 
 /* ======== 공통 클래스 ======== */
 body {
-    font-family: var(--Kofont);
-    font-size: var(--font-size-b1);
-    color: var(--color-cyan);
+  font-family: var(--Kofont);
+  font-size: var(--font-size-b1);
+  color: var(--color-cyan);
 }
 
 #app {
-    max-width: 412px;
-    width: 100%;
-    min-height: 100dvh;
-    margin: 0 auto;
-    padding: 0 20px;
-    background-color: var(--color-bg);
+  max-width: 412px;
+  width: 100%;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 0 20px;
+  background-color: var(--color-bg);
+}
+
+.dim {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #080a1f1c;
+  filter: blur(2px);
 }
