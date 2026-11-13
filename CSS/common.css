@@ -46,4 +46,7 @@ body {
   height: 100%;
   background-color: #080a1f1c;
   filter: blur(2px);
+  font-family: var(--font-ko);
+  font-size: var(--body-sm);
+  color: var(--accent-cyan);
 }
