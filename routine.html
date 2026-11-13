@@ -13,8 +13,9 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
     <!-- JS -->
-    <link rel="stylesheet" href="/js/pages/routine.js">
-    <link rel="stylesheet" href="/js/services/routine-service.js">
+    <link rel="stylesheet" href="js/app.js">
+    <link rel="stylesheet" href="js/pages/routine.js">
+    <link rel="stylesheet" href="js/services/routine-service.js">
 
 </head>
 
@@ -37,7 +38,15 @@
         <!-- main -->
         <main id="main" class="main">
             <div class="week-view">
-                <nav id="week-strip" class="week-strip" aria-label="날짜 선택"></nav>
+                <nav id="week-strip" class="week-strip" aria-label="날짜 선택">
+                    <button type="button" class="week-day is-selected" data-action="select-date" data-date="2026-08-10" aria-pressed="true" aria-label="2026년 8월 10일 월요일"><span class="week-day__star" aria-hidden="true"></span><span class="week-day__date">10</span><span class="week-day__label">월</span></button>
+                    <button type="button" class="week-day" data-action="select-date" data-date="2026-08-11" aria-pressed="false" aria-label="2026년 8월 11일 화요일"><span class="week-day__star" aria-hidden="true"></span><span class="week-day__date">11</span><span class="week-day__label">화</span></button>
+                    <button type="button" class="week-day" data-action="select-date" data-date="2026-08-12" aria-pressed="false" aria-label="2026년 8월 12일 수요일"><span class="week-day__star" aria-hidden="true"></span><span class="week-day__date">12</span><span class="week-day__label">수</span></button>
+                    <button type="button" class="week-day" data-action="select-date" data-date="2026-08-13" aria-pressed="false" aria-label="2026년 8월 13일 목요일"><span class="week-day__star" aria-hidden="true"></span><span class="week-day__date">13</span><span class="week-day__label">목</span></button>
+                    <button type="button" class="week-day" data-action="select-date" data-date="2026-08-14" aria-pressed="false" aria-label="2026년 8월 14일 금요일"><span class="week-day__star" aria-hidden="true"></span><span class="week-day__date">14</span><span class="week-day__label">금</span></button>
+                    <button type="button" class="week-day" data-action="select-date" data-date="2026-08-15" aria-pressed="false" aria-label="2026년 8월 15일 토요일"><span class="week-day__star" aria-hidden="true"></span><span class="week-day__date">15</span><span class="week-day__label">토</span></button>
+                    <button type="button" class="week-day" data-action="select-date" data-date="2026-08-16" aria-pressed="false" aria-label="2026년 8월 16일 일요일"><span class="week-day__star" aria-hidden="true"></span><span class="week-day__date">16</span><span class="week-day__label">일</span></button>
+                </nav>
             </div>
             <div class="tag-bar">
                 <div class="tag-filters">

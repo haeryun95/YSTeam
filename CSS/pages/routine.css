@@ -11,7 +11,7 @@
 }
 
 #app-header .month-control P {
-    font-size: var(--font-size-h2);
+    font-size: var(--heading-md);
     line-height: 60px;
 }
 
@@ -27,7 +27,7 @@
     width: 100%;
     height: 100%;
     font-size: 30px;
-    color: var(--color-cyan);
+    color: var(--accent-cyan);
     line-height: 40px;
 }
 
@@ -37,24 +37,82 @@
 }
 
 #main .week-view .week-strip {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 8px;
     width: 100%;
-    height: 70px;
+    padding-top: 8px;
+}
+#main .week-day {
+    display: grid;
+    place-content: center;
+    gap: 4px;
+    position: relative;
+    box-sizing: border-box;
+    min-width: 30px;
+    min-height: 50px;
+    margin: 0;
+    padding: 12px 0 8px;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    color: var(--text-main);
+    font: inherit;
+    font-size: var(--body-md);
+    line-height: 1.15;
+    cursor: pointer;
+}
+#main .week-day.is-selected {
+    color: var(--accent-cyan);
+}
+#main .week-day::before,
+#main .week-day::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: currentColor;
+    clip-path: polygon(4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px), 0 4px);
+    pointer-events: none;
+}
+#main .week-day::after {
+    inset: 1px;
+    background: var(--page-bg);
+}
+#main .week-day__date,
+#main .week-day__label {
+    position: relative;
+    z-index: 1;
+}
+#main .week-day__star {
+    position: absolute;
+    z-index: 1;
+    top: -9px;
+    left: 50%;
+    width: 18px;
+    height: 18px;
+    transform: translateX(-50%);
+    background: currentColor;
+    clip-path: polygon(50% 0, 58% 34%, 85% 15%, 66% 42%, 100% 50%, 66% 58%, 85% 85%, 58% 66%, 50% 100%, 42% 66%, 15% 85%, 34% 58%, 0 50%, 34% 42%, 15% 15%, 42% 34%);
+}
+#main .week-day:focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: -4px;
 }
 
 #main .tag-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 30px 0 50px;
+    margin: 30px 0;
 }
 #main .tag-bar .tag-filters {
-    border: 1px solid var(--color-cyan);
-    border-radius: var(--radius-4);
+    border: 1px solid var(--accent-cyan);
+    border-radius: var(--radius-sm);
     padding: 3px 5px;
-    background-color: var(--color-cyan);
+    background-color: var(--accent-cyan);
 }
 #main .tag-bar .tag-filters p {
-    color: var(--color-bg);
+    color: var(--page-bg);
 }
 
 #main .tag-bar .tag-manage {
@@ -62,15 +120,15 @@
     align-items: center;
     justify-content: space-between;
     background: none;
-    border: 1px solid var(--color-muted);
+    border: 1px solid var(--text-muted);
     padding: 2px 5px;
-    border-radius: var(--radius-4);
-    color: var(--color-muted);
-    font-size: var(--font-size-b1);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: var(--body-sm);
 }
 #main .tag-bar .tag-manage .tag-label {}
 #main .tag-bar .tag-manage span {
-    font-size: var(--font-size-b2);
+    font-size: var(--body-md);
     margin-left: 2px;
 }
 
@@ -98,42 +156,46 @@
 }
 #main .routine-section .section-heading__line path {
     fill: none;
-    stroke: var(--color-cyan);
+    stroke: var(--accent-cyan);
     stroke-width: 2;
     stroke-linejoin: miter;
     vector-effect: non-scaling-stroke;
 }
 #main .routine-section .section-title {
-    font-size: var(--font-size-h1);
-    color: var(--color-white);
+    font-size: var(--heading-sm);
+    color: var(--text-main);
     line-height: 20px;
 }
 #main .routine-section .section-count {
     justify-self: end;
     padding-top: 15px;
-    font-size: var(--font-size-b1);
-    color: var(--color-white);
+    font-size: var(--body-sm);
+    color: var(--text-main);
     line-height: 14px;
     white-space: nowrap;
 }
 #main .routine-section .section-completed {
-    grid-template-columns: auto minmax(0, 1fr) 44px;
+    --heading-end-gap: 37px;
+    padding-right: var(--heading-end-gap);
 }
 #main .section-completed .section-heading__line {
-    width: calc(100% - 52px);
+    width: calc(100% - var(--heading-end-gap));
 }
 #main .section-completed .section-toggle {
+    position: absolute;
+    top: 15%;
+    right: 0;
+    transform: translateY(-50%);
     display: grid;
     place-items: center;
-    justify-items: center;
-    align-self: center;
+    justify-items: end;
     box-sizing: border-box;
     width: 44px;
     height: 44px;
-    padding-bottom: 0;
+    padding: 0;
     border: 0;
     background: none;
-    color: var(--color-cyan);
+    color: var(--accent-cyan);
     font: inherit;
     cursor: pointer;
 }
@@ -141,18 +203,19 @@
     display: grid;
     place-items: center;
     box-sizing: border-box;
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
     border: 1px solid currentColor;
-    border-radius: var(--radius-4);
-    font-size: var(--font-size-h1);
+    border-radius: var(--radius-sm);
+    font-size: var(--heading-sm);
     line-height: 1;
 }
 #main .section-completed .section-toggle:focus-visible {
-    outline: 2px solid var(--color-white);
+    outline: 2px solid var(--text-main);
     outline-offset: 2px;
-    border-radius: var(--radius-4);
+    border-radius: var(--radius-sm);
 }
+
 /* ======== routine-list ======== */
 #main .routine-list {
     display: grid;
@@ -169,14 +232,14 @@
     position: relative;
     padding: 3px 8px;
     min-height: 60px;
-    background-color: var(--color-cyan);
+    background-color: var(--accent-cyan);
     clip-path: polygon(var(--card-corner) 0, calc(100% - var(--card-corner)) 0, 100% var(--card-corner), 100% calc(100% - var(--card-corner)), calc(100% - var(--card-corner)) 100%, var(--card-corner) 100%, 0 calc(100% - var(--card-corner)), 0 var(--card-corner));
 }
 #main .routine-card::before {
     content: "";
     position: absolute;
     inset: 1px;
-    background-color: var(--color-bg);
+    background-color: var(--page-bg);
     clip-path: inherit;
     pointer-events: none;
 }
@@ -188,7 +251,7 @@
     min-height: 44px;
     border: 0;
     background: none;
-    color: var(--color-cyan);
+    color: var(--accent-cyan);
     font: inherit;
     cursor: pointer;
 }
@@ -208,37 +271,37 @@
     justify-self: center;
 }
 #main .routine-card__title {
-    font-size: var(--font-size-b2);
+    font-size: var(--body-md);
     line-height: 1.5;
     overflow-wrap: anywhere;
 }
 #main .routine-card__schedule {
-    color: var(--color-white);
-    font-size: var(--font-size-c2);
+    color: var(--text-main);
+    font-size: var(--caption-md);
     line-height: 1.5;
     overflow-wrap: anywhere;
 }
 #main .routine-card__menu {
     width: 44px;
-    font-size: var(--font-size-h1);
+    font-size: var(--heading-sm);
     letter-spacing: 2px;
 }
 #main .routine-card__complete:focus-visible,
 #main .routine-card__menu:focus-visible {
-    outline: 2px solid var(--color-white);
+    outline: 2px solid var(--text-main);
     outline-offset: -3px;
-    border-radius: var(--radius-4);
+    border-radius: var(--radius-sm);
 }
 #main .routine-section-completed {
     margin-top: 32px;
 }
 #main .routine-section-completed .routine-card {
-    background-color: var(--color-muted);
+    background-color: var(--text-muted);
 }
 #main .routine-section-completed .routine-card__complete,
 #main .routine-section-completed .routine-card__menu,
 #main .routine-section-completed .routine-card__schedule {
-    color: var(--color-muted);
+    color: var(--text-muted);
 }
 #main .routine-section-completed .routine-card__icon {
     filter: brightness(0) invert(40.7843%);
