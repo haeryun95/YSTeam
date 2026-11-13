@@ -1,42 +1,32 @@
-/* CSS 변수 */
 :root {
-    /* Font */
-    --Kofont: 'NeoDunggeunGothicPro', 'Noto Sans KR', sans-serif;
+  /* 한글 기본 글꼴 /
+  --font-ko: "NeoDunggeunGothicPro", "Noto Sans KR", sans-serif;
 
-    /* Color */
-    --color-bg: #080a1f;
-    --color-cyan: #01cffd;
-    --color-white: #ffffff;
-    --color-muted: #686868;
+  / 페이지 배경색과 강조색 /
+  --page-bg: #080a1f;
+  --accent-cyan: #01cffd;
 
-    /* Font-size */
-    --font-size-c1: 10px;
-    --font-size-c2: 12px;
-    --font-size-b1: 14px;
-    --font-size-b2: 16px;
-    --font-size-h1: 20px;
-    --font-size-h2: 24px;
-    --font-size-hh-32: 32px;
-    --font-size-hh-36: 36px;
-    --font-size-hh-40: 40px;
+  / 기본 텍스트와 보조 텍스트 /
+  --text-main: #ffffff;
+  --text-muted: #686868;
 
-    /* border-radius */
-    --radius-4: 4px;
+  / 캡션 · 라벨 /
+  --caption-sm: 10px;
+  --caption-md: 12px;
 
-    /* 새 변수명: 기존 변수와 연결해 두 이름 모두 사용할 수 있게 한다. */
-    --font-ko: var(--Kofont);
-    --page-bg: var(--color-bg);
-    --accent-cyan: var(--color-cyan);
-    --text-main: var(--color-white);
-    --text-muted: var(--color-muted);
-    --caption-sm: var(--font-size-c1);
-    --caption-md: var(--font-size-c2);
-    --body-sm: var(--font-size-b1);
-    --body-md: var(--font-size-b2);
-    --heading-sm: var(--font-size-h1);
-    --heading-md: var(--font-size-h2);
-    --display-sm: var(--font-size-hh-32);
-    --display-md: var(--font-size-hh-36);
-    --display-lg: var(--font-size-hh-40);
-    --radius-sm: var(--radius-4);
+  / 본문 /
+  --body-sm: 14px;
+  --body-md: 16px;
+
+  / 섹션 제목 /
+  --heading-sm: 20px;
+  --heading-md: 24px;
+
+  / 페이지 제목 · 배너 타이틀 /
+  --display-sm: 32px;
+  --display-md: 36px;
+  --display-lg: 40px;
+
+  / 모서리 둥글기 */
+  --radius-sm: 4px;
 }
