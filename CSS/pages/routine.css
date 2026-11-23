@@ -1,4 +1,98 @@
 /* ======== app-header ======== */
+.calendar-dialog {
+    box-sizing: border-box;
+    width: min(372px, calc(100% - 32px));
+    max-height: calc(100dvh - 32px);
+    margin: auto;
+    padding: 16px;
+    border: 1px solid var(--accent-cyan);
+    border-radius: var(--radius-sm);
+    background: var(--page-bg);
+    color: var(--text-main);
+    font-family: var(--font-ko);
+    font-size: var(--heading-sm);
+    overflow: auto;
+}
+.calendar-dialog::backdrop {
+    background: rgb(0 0 0 / 60%);
+}
+.calendar-dialog__month {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+.calendar-dialog button {
+    font-family: var(--font-ko);
+    min-width: 44px;
+    min-height: 44px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: none;
+    color: var(--accent-cyan);
+    font-size: var(--display-sm);
+    cursor: pointer;
+    line-height: 44px;
+}
+.calendar-dialog button:focus-visible {
+    outline: 2px solid var(--accent-cyan);
+}
+.calendar-dialog button:disabled {
+    color: var(--text-muted);
+    cursor: default;
+}
+.calendar-dialog__status {
+    font-size: var(--caption-md);
+}
+.calendar-dialog__table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: var(--body-sm);
+}
+.calendar-dialog__table th {
+    height: 36px;
+    color: var(--text-muted);
+    font-weight: normal;
+}
+.calendar-dialog__table td {
+    height: 40px;
+}
+.calendar-dialog .calendar-dialog__day {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    font-size: var(--body-sm);
+    color: var(--text-main);
+}
+.calendar-dialog .calendar-dialog__day.is-selected {
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    background: var(--accent-cyan);
+    color: var(--page-bg);
+}
+.calendar-dialog__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 12px;
+}
+.calendar-dialog .calendar-dialog__cancel {
+    border: 1px solid var(--text-main);
+    background: none;
+    color: var(--text-main);
+    font-size: var(--body-md);
+}
+.calendar-dialog .calendar-dialog__confirm {
+    width: 100%;
+    background: var(--accent-cyan);
+    color: var(--page-bg);
+    font-size: var(--body-md);
+}
 #app-header {
     width: 100%;
     height: 60px;
@@ -37,11 +131,22 @@
 }
 
 #main .week-view .week-strip {
+    touch-action: pan-y;
+    user-select: none;
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 8px;
     width: 100%;
     padding-top: 8px;
+}
+#main .week-view__status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
 }
 #main .week-day {
     display: grid;

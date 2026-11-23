@@ -13,9 +13,8 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
     <!-- JS -->
-    <link rel="stylesheet" href="js/app.js">
-    <link rel="stylesheet" href="js/pages/routine.js">
-    <link rel="stylesheet" href="js/services/routine-service.js">
+    <script defer src="js/services/routine-service.js?v=20261118-2"></script>
+    <script defer src="js/pages/routine.js?v=20261118-2"></script>
 
 </head>
 
@@ -28,7 +27,8 @@
                 <p class="month-label">
                     2026년 08월
                 </p>
-                <button type="button" class="month-button">
+                <button type="button" class="month-button" data-action="open-calendar"
+                    aria-label="달력 열기" aria-haspopup="dialog" aria-controls="routine-calendar" aria-expanded="false">
                     <span class="material-symbols-outlined">
                         arrow_drop_down
                     </span>
@@ -133,7 +133,7 @@
                     <li class="routine-card" data-routine-id="routine-5">
                         <button type="button" class="routine-card__complete" data-action="uncomplete-routine"
                             aria-label="물 마시기 완료 취소하기">
-                            <img class="routine-card__icon" src="assets/icons/routine-icon.png" alt="">
+                            <img class="routine-card__icon" src="assets/icons/routine-icon_complete.png" alt="">
                             <span class="routine-card__title">물 마시기</span>
                             <span class="routine-card__schedule">매일 · 오전</span>
                         </button>
@@ -143,7 +143,7 @@
                     <li class="routine-card" data-routine-id="routine-6">
                         <button type="button" class="routine-card__complete" data-action="uncomplete-routine"
                             aria-label="책 읽기 완료 취소하기">
-                            <img class="routine-card__icon" src="assets/icons/routine-icon.png" alt="">
+                            <img class="routine-card__icon" src="assets/icons/routine-icon_complete.png" alt="">
                             <span class="routine-card__title">책 읽기</span>
                             <span class="routine-card__schedule">월, 수, 금 · 종일</span>
                         </button>
@@ -153,7 +153,7 @@
                     <li class="routine-card" data-routine-id="routine-7">
                         <button type="button" class="routine-card__complete" data-action="uncomplete-routine"
                             aria-label="정기검진 완료 취소하기">
-                            <img class="routine-card__icon" src="assets/icons/routine-icon.png" alt="">
+                            <img class="routine-card__icon" src="assets/icons/routine-icon_complete.png" alt="">
                             <span class="routine-card__title">정기검진</span>
                             <span class="routine-card__schedule">매월 1일 · 오후</span>
                         </button>
@@ -163,7 +163,7 @@
                     <li class="routine-card" data-routine-id="routine-8">
                         <button type="button" class="routine-card__complete" data-action="uncomplete-routine"
                             aria-label="등산 가기 완료 취소하기">
-                            <img class="routine-card__icon" src="assets/icons/routine-icon.png" alt="">
+                            <img class="routine-card__icon" src="assets/icons/routine-icon_complete.png" alt="">
                             <span class="routine-card__title">등산 가기</span>
                             <span class="routine-card__schedule">주말 · 종일</span>
                         </button>
@@ -173,11 +173,25 @@
                 </ul>
             </section>
         </main>
-        <!-- nav bottom -->
-        <nav id="nav-bottom"></nav>
     </div>
 
-    <div class="dim"></div>
+    <dialog id="routine-calendar" class="calendar-dialog" aria-label="날짜 선택">
+        <div class="calendar-dialog__month">
+            <button type="button" data-action="previous-month" aria-label="이전 달">‹</button>
+            <p data-calendar-month aria-live="polite"></p>
+            <button type="button" data-action="next-month" aria-label="다음 달">›</button>
+        </div>
+        <p class="calendar-dialog__status" data-calendar-status role="status"></p>
+        <table class="calendar-dialog__table" aria-label="월별 달력">
+            <thead><tr><th scope="col">일</th><th scope="col">월</th><th scope="col">화</th><th scope="col">수</th><th scope="col">목</th><th scope="col">금</th><th scope="col">토</th></tr></thead>
+            <tbody data-calendar-days></tbody>
+        </table>
+        <div class="calendar-dialog__actions">
+            <button type="button" class="calendar-dialog__cancel" data-action="close-calendar">취소</button>
+            <button type="button" class="calendar-dialog__confirm" data-action="confirm-calendar">확인</button>
+        </div>
+    </dialog>
+    <div class="dim" hidden></div>
 </body>
 
 </html>

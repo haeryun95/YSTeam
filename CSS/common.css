@@ -23,9 +23,9 @@ img {
 
 /* ======== 공통 클래스 ======== */
 body {
-  font-family: var(--Kofont);
-  font-size: var(--font-size-b1);
-  color: var(--color-cyan);
+  font-family: var(--font-ko);
+  font-size: var(--body-sm);
+  color: var(--accent-cyan);
 }
 
 #app {
@@ -34,7 +34,7 @@ body {
   min-height: 100dvh;
   margin: 0 auto;
   padding: 0 20px;
-  background-color: var(--color-bg);
+  background-color: var(--page-bg);
 }
 
 .dim {
