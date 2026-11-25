@@ -175,6 +175,15 @@
         </main>
     </div>
 
+    <div class="dim" data-routine-menu-dim hidden></div>
+    <div id="routine-menu" class="routine-menu" data-routine-menu role="menu" aria-label="루틴 관리" hidden>
+        <button type="button" class="routine-menu__item" data-action="edit-routine" role="menuitem">
+            <span>수정하기</span><span class="material-symbols-outlined" aria-hidden="true">edit_square</span>
+        </button>
+        <button type="button" class="routine-menu__item routine-menu__item--delete" data-action="delete-routine" role="menuitem">
+            <span>삭제하기</span><span class="material-symbols-outlined" aria-hidden="true">delete</span>
+        </button>
+    </div>
     <dialog id="routine-calendar" class="calendar-dialog" aria-label="날짜 선택">
         <div class="calendar-dialog__month">
             <button type="button" data-action="previous-month" aria-label="이전 달">‹</button>

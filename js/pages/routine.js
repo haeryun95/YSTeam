@@ -304,6 +304,116 @@
     });
 })();
 
+// 완료 목록의 펼침 상태는 목록 데이터와 별도로 관리한다.
+(() => {
+    const button = document.querySelector('[data-action="toggle-completed-list"]');
+    const list = document.querySelector("#completed-list");
+    if (!button || !list) return;
+    const icon = button.querySelector("[data-completed-toggle-icon]");
+    const panel = document.createElement("div");
+    panel.className = "completed-list-panel";
+    list.before(panel);
+    panel.append(list);
+
+    function setCompletedExpanded(expanded) {
+        // grid 높이를 전환해야 하므로 hidden으로 즉시 제거하지 않는다.
+        list.hidden = false;
+        panel.classList.toggle("is-collapsed", !expanded);
+        list.inert = !expanded;
+        list.setAttribute("aria-hidden", String(!expanded));
+        button.setAttribute("aria-expanded", String(expanded));
+        button.setAttribute("aria-label", `완료 루틴 목록 ${expanded ? "접기" : "펼치기"}`);
+        icon.textContent = expanded ? "−" : "+";
+    }
+
+    function handleToggleCompletedList() {
+        setCompletedExpanded(button.getAttribute("aria-expanded") !== "true");
+    }
+
+    button.addEventListener("click", handleToggleCompletedList);
+    setCompletedExpanded(button.getAttribute("aria-expanded") === "true");
+})();
+
+// 루틴 더보기 메뉴의 표시와 닫기만 담당한다. 수정·삭제는 각 기능에서 연결한다.
+(() => {
+    const root = document.querySelector("#main");
+    const menu = document.querySelector("[data-routine-menu]");
+    const dim = document.querySelector("[data-routine-menu-dim]");
+    if (!root || !menu || !dim) return;
+    let opener;
+    let selectedCard;
+    let positionAnimation;
+    const menuItems = Array.from(menu.querySelectorAll('[role="menuitem"]'));
+
+    root.querySelectorAll('[data-action="open-routine-menu"]').forEach((button) => {
+        button.setAttribute("aria-haspopup", "menu");
+        button.setAttribute("aria-controls", "routine-menu");
+        button.setAttribute("aria-expanded", "false");
+    });
+
+    function closeRoutineMenu(restoreFocus = true) {
+        if (!opener) return;
+        const previousOpener = opener;
+        opener.setAttribute("aria-expanded", "false");
+        selectedCard?.classList.remove("is-menu-open");
+        menu.hidden = true;
+        dim.hidden = true;
+        positionAnimation?.cancel();
+        menu.removeAttribute("data-routine-id");
+        opener = undefined;
+        selectedCard = undefined;
+        if (restoreFocus && previousOpener.isConnected) previousOpener.focus();
+    }
+
+    function openRoutineMenu(button) {
+        if (opener === button) {
+            closeRoutineMenu();
+            return;
+        }
+        closeRoutineMenu(false);
+        opener = button;
+        selectedCard = button.closest("[data-routine-id]");
+        selectedCard.classList.add("is-menu-open");
+        menu.dataset.routineId = selectedCard.dataset.routineId;
+        opener.setAttribute("aria-expanded", "true");
+        menu.hidden = false;
+        dim.hidden = false;
+        const anchor = (button.querySelector("span") || button).getBoundingClientRect();
+        const bounds = menu.getBoundingClientRect();
+        const x = Math.max(8, Math.min(anchor.right - bounds.width, window.innerWidth - bounds.width - 8));
+        const preferredY = anchor.bottom + 4 + bounds.height < window.innerHeight - 8
+            ? anchor.bottom + 4 : anchor.top - bounds.height - 4;
+        const y = Math.max(8, Math.min(preferredY, window.innerHeight - bounds.height - 8));
+        const frame = { transform: `translate(${x}px, ${y}px)` };
+        positionAnimation = menu.animate([frame, frame], { duration: 1, fill: "forwards" });
+        menuItems[0].focus({ preventScroll: true });
+    }
+
+    root.addEventListener("click", (event) => {
+        const button = event.target.closest('[data-action="open-routine-menu"]');
+        if (button && root.contains(button)) openRoutineMenu(button);
+        else if (opener) closeRoutineMenu(false);
+    });
+    dim.addEventListener("click", () => closeRoutineMenu());
+    document.addEventListener("keydown", (event) => {
+        if (!opener) return;
+        if (event.key === "Escape") {
+            event.preventDefault();
+            closeRoutineMenu();
+        } else if (event.key === "Tab") {
+            closeRoutineMenu();
+        } else if (["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) {
+            event.preventDefault();
+            const index = menuItems.indexOf(document.activeElement);
+            const next = event.key === "Home" ? 0 : event.key === "End" ? menuItems.length - 1
+                : (index + (event.key === "ArrowDown" ? 1 : -1) + menuItems.length) % menuItems.length;
+            menuItems[next].focus();
+        }
+    });
+    window.addEventListener("resize", () => closeRoutineMenu(false));
+    window.addEventListener("scroll", () => closeRoutineMenu(false), true);
+})();
+
 // 태그 관리 화면: 데이터 변경과 저장은 RoutineTagService에 맡긴다.
 (() => {
     const openButton = document.querySelector('[data-action="open-tag-manager"]');
@@ -321,6 +431,7 @@
     const filterStatus = document.querySelector("[data-routine-filter-status]");
     let selectedTagId = null;
     let filterRequest = 0;
+    let completionBusy = false;
     const input = form.querySelector("input");
     const formError = form.querySelector("[role=alert]");
     let tags = [];
@@ -428,8 +539,8 @@
                     empty.dataset.filterEmpty = "";
                     routineList.append(empty);
                 }
-                empty.textContent = state === "pending" ? "해당하는 미완료 루틴이 없어요." : "해당하는 완료 루틴이 없어요.";
-                empty.hidden = count > 0;
+                empty.textContent = "";
+                empty.hidden = true;
             }
         } catch (error) {
             if (request === filterRequest) filterStatus.textContent = error.message || "다시 시도해 주세요.";
@@ -443,6 +554,65 @@
         if (!button || !tagFilters.contains(button)) return;
         filterRoutineLists(button.dataset.tagId || null);
     });
+
+    function renderRoutineCompletion(completedIds) {
+        const completed = new Set(completedIds);
+        document.querySelectorAll(".routine-card[data-routine-id]").forEach((card) => {
+            const isCompleted = completed.has(card.dataset.routineId);
+            const target = document.querySelector(isCompleted ? "#completed-list" : "#pending-list");
+            if (card.parentElement !== target) target.append(card);
+            const button = card.querySelector(".routine-card__complete");
+            const title = card.querySelector(".routine-card__title").textContent;
+            button.dataset.action = isCompleted ? "uncomplete-routine" : "complete-routine";
+            button.setAttribute("aria-label", `${title} ${isCompleted ? "완료 취소하기" : "완료하기"}`);
+            card.querySelector(".routine-card__icon").src = isCompleted
+                ? "assets/icons/routine-icon_complete.png" : "assets/icons/routine-icon.png";
+        });
+    }
+
+    async function initializeRoutineProgress() {
+        completionBusy = true;
+        try {
+            const result = await RoutineProgressService.getProgress();
+            if (result.status !== "success") throw new Error(result.error?.message || "완료 상태를 불러오지 못했어요.");
+            renderRoutineCompletion(result.data.completedIds);
+            await filterRoutineLists(selectedTagId);
+        } catch (error) {
+            filterStatus.textContent = error.message || "완료 상태를 불러오지 못했어요.";
+        } finally {
+            completionBusy = false;
+        }
+    }
+
+    async function handleCompleteRoutine(event) {
+        const button = event.target.closest('[data-action="complete-routine"], [data-action="uncomplete-routine"]');
+        if (!button || completionBusy) return;
+        const completed = button.dataset.action === "complete-routine";
+        if (!button.closest(completed ? "#pending-list" : "#completed-list")) return;
+        const card = button.closest("[data-routine-id]");
+        completionBusy = true;
+        button.disabled = true;
+        button.setAttribute("aria-busy", "true");
+        try {
+            const options = { id: card.dataset.routineId };
+            const result = completed
+                ? await RoutineProgressService.completeRoutine(options)
+                : await RoutineProgressService.uncompleteRoutine(options);
+            if (result.status === "cancelled") return;
+            if (result.status !== "success") throw new Error(result.error?.message || "루틴 상태를 변경하지 못했어요.");
+            renderRoutineCompletion(result.data.completedIds);
+            await filterRoutineLists(selectedTagId);
+        } catch (error) {
+            filterStatus.textContent = error.message || "다시 시도해 주세요.";
+        } finally {
+            completionBusy = false;
+            button.disabled = false;
+            button.removeAttribute("aria-busy");
+        }
+    }
+
+    document.querySelector("#main").addEventListener("click", handleCompleteRoutine);
+    initializeRoutineProgress();
 
     function focusTag(id, action = "move-tag") {
         const row = Array.from(list.children).find((item) => item.dataset.tagId === id);

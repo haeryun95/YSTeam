@@ -535,6 +535,7 @@
     outline-offset: -3px;
 }
 #main .routine-card[hidden],
+#main .routine-list[hidden],
 #main .routine-list__empty[hidden],
 .routine-filter-status:empty {
     display: none;
@@ -651,12 +652,81 @@
 }
 
 /* ======== routine-list ======== */
+.routine-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1002;
+    box-sizing: border-box;
+    width: 100px;
+    padding: 0;
+    border: 1px solid var(--accent-cyan);
+    border-radius: var(--radius-sm);
+    background: var(--page-bg);
+    color: var(--text-main);
+}
+.routine-menu[hidden] {
+    display: none;
+}
+.routine-menu__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    min-height: 40px;
+    padding: 6px 10px;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    font-size: var(--caption-md);
+    cursor: pointer;
+}
+.routine-menu__item + .routine-menu__item {
+    border-top: 1px dashed var(--accent-cyan);
+}
+.routine-menu__item--delete {
+    color: var(--accent-cyan);
+}
+.routine-menu__item .material-symbols-outlined {
+    font-size: 20px;
+    font-variation-settings: 'FILL' 0, 'wght' 300;
+}
+.routine-menu__item:focus-visible {
+    outline: 1px solid var(--accent-cyan);
+    outline-offset: -3px;
+}
+#main .routine-card.is-menu-open {
+    z-index: 1001;
+}
 #main .routine-list {
     display: grid;
     gap: 12px;
     margin-top: 16px;
     padding: 0;
     list-style: none;
+}
+#main .completed-list-panel {
+    display: grid;
+    grid-template-rows: 1fr;
+    margin-top: 16px;
+    opacity: 1;
+    transition: grid-template-rows 300ms ease, margin-top 300ms ease, opacity 220ms ease;
+}
+#main .completed-list-panel.is-collapsed {
+    grid-template-rows: 0fr;
+    margin-top: 0;
+    opacity: 0;
+}
+#main .completed-list-panel > .routine-list {
+    min-height: 0;
+    margin-top: 0;
+    overflow: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+    #main .completed-list-panel {
+        transition: none;
+    }
 }
 #main .routine-card {
     --card-corner: 8px;

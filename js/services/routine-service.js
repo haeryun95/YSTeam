@@ -68,6 +68,54 @@ const RoutineTagService = (() => {
     };
 })();
 
+// 현재 샘플 루틴의 완료 상태를 저장한다. 서버 도입 시 이 구현을 교체한다.
+const RoutineProgressService = (() => {
+    const storageKey = "ysteam.routine.progress.v1";
+    const validIds = new Set(Array.from({ length: 8 }, (_, index) => `routine-${index + 1}`));
+
+    function readCompletedIds() {
+        const saved = localStorage.getItem(storageKey);
+        if (saved === null) return ["routine-5", "routine-6", "routine-7", "routine-8"];
+        const ids = JSON.parse(saved);
+        if (!Array.isArray(ids) || ids.some((id) => !validIds.has(id)) || new Set(ids).size !== ids.length) {
+            throw new Error("저장된 루틴 완료 정보를 확인해 주세요.");
+        }
+        return ids;
+    }
+
+    async function runOperation(id, completed = true) {
+        try {
+            const completedIds = readCompletedIds();
+            if (id !== undefined) {
+                if (!validIds.has(id)) throw new Error("루틴을 찾을 수 없어요.");
+                const index = completedIds.indexOf(id);
+                if (completed && index < 0) completedIds.push(id);
+                if (!completed && index >= 0) completedIds.splice(index, 1);
+                localStorage.setItem(storageKey, JSON.stringify(completedIds));
+            }
+            return { status: "success", data: { completedIds }, error: null };
+        } catch (error) {
+            return { status: "error", data: null, error: { message: error.message || "루틴을 완료하지 못했어요." } };
+        }
+    }
+
+    return {
+        async getProgress() { return runOperation(); },
+        async completeRoutine({ id } = {}) {
+            if (typeof id !== "string") {
+                return { status: "error", data: null, error: { message: "루틴을 확인해 주세요." } };
+            }
+            return runOperation(id);
+        },
+        async uncompleteRoutine({ id } = {}) {
+            if (typeof id !== "string") {
+                return { status: "error", data: null, error: { message: "루틴을 확인해 주세요." } };
+            }
+            return runOperation(id, false);
+        },
+    };
+})();
+
 const RoutineService = {
     /** 서버 연동 전 샘플 분류. 태그 이름/순서 대신 고유 ID로 연결한다. */
     async getRoutineIdsByTag({ tagId = null } = {}) {
