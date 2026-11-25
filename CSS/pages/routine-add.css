@@ -1,0 +1,48 @@
+@charset "utf-8";
+
+/* ============ header ============ */
+.routine-add-header {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    align-items: center;
+    min-height: 60px;
+    margin-inline-start: -20px;
+    color: var(--text-main);
+}
+
+.routine-add-header__title {
+    font-size: var(--heading-sm);
+    font-weight: normal;
+}
+
+.routine-add-header__back,
+.routine-add-header__cancel {
+    min-width: 48px;
+    min-height: 48px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+.routine-add-header__back {
+    display: grid;
+    place-items: center;
+    font-size: var(--heading-md);
+}
+
+.routine-add-header__cancel {
+    text-align: right;
+    font-size: var(--body-md);
+    font-weight: normal;
+}
+
+.routine-add-header button:focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: -3px;
+    border-radius: var(--radius-sm);
+}
+
+/* ============  ============ */

@@ -1,0 +1,32 @@
+:root {
+  /* 한글 폰트 */
+  --font-ko: "NeoDunggeunGothicPro", "Noto Sans KR", sans-serif;
+
+  /* 페이지 강조색 */
+  --page-bg: #080a1f;
+  --accent-cyan: #01cffd;
+
+  /* 기본 텍스트와 보조 텍스트 */
+  --text-main: #ffffff;
+  --text-muted: #686868;
+
+  /* 캡션 · 라벨 */
+  --caption-sm: 10px;
+  --caption-md: 12px;
+
+  /* 본문 */
+  --body-sm: 14px;
+  --body-md: 16px;
+
+  /* 섹션 제목 */
+  --heading-sm: 20px;
+  --heading-md: 24px;
+
+  /* 페이지 제목 · 배너 타이틀 */
+  --display-sm: 32px;
+  --display-md: 36px;
+  --display-lg: 40px;
+
+  /* 모서리 둥글기 */
+  --radius-sm: 4px;
+}
