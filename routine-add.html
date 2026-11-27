@@ -23,20 +23,28 @@
     <div id="app" class="routine-add-page">
         <!-- header -->
         <header id="app-header" class="routine-add-header">
-            <button type="button" class="routine-add-header__back" data-action="go-back" aria-label="뒤로가기">
+            <button 
+                type="button" 
+                class="routine-add-header__back" 
+                data-action="go-back" 
+                aria-label="뒤로가기">
                 <span aria-hidden="true">&lt;</span>
             </button>
 
             <h2 class="routine-add-header__title">루틴 추가</h2>
 
-            <button type="button" class="routine-add-header__cancel" data-action="cancel-routine-add">
+            <button 
+                type="button"
+                class="routine-add-header__cancel"
+                data-action="cancel-routine-add">
                 취소
             </button>
         </header>
         <!-- main -->
         <main id="main" class="routine-add-main">
-            <form class="routine-form">
-                <div class="routine-form__field">
+            <form id="routine-add-form" class="routine-form">
+                <!-- 루틴 이름 -->
+                <section class="routine-form__field">
                     <label for="routine-name" class="routine-form__label">
                         루틴 이름
                         <sup class="routine-form__required-mark" aria-hidden="true">*</sup>
@@ -44,99 +52,306 @@
                     <input type="text" class="routine-form__name" id="routine-name" name="routineName" maxlength="15" required placeholder="ex&#41; 물 마시기, 일찍 일어나기 ..." aria-describedby="routine-name-hint">
                     <span class="routine-add-page__sr-only" id="routine-name-hint">최대 15자</span>
                     <output class="routine-form__count" id="routine-name-count" for="routine-name" data-name-count>0/15</output>
-                </div>
+                </section>
 
-                <div class="routine-form__field">
+                <!-- 기간 -->
+                <section class="routine-form__field">
                     <p class="routine-form__label" id="routine-period-label">
                         기간
                     </p>
                     <button 
-                    type="button" 
-                    class="routine-form__period" 
-                    data-action="open-period" 
-                    aria-haspopup="dialog" 
-                    aria-controls="routine-period-dialog" 
-                    aria-expanded="false" 
-                    aria-labelledby="routine-period-label routine-period-value">
-                        <img src="assets/icons/calendar-icon.svg" alt="기간 선택" width="24" height="24">
+                        type="button" 
+                        class="routine-form__period" 
+                        data-action="open-period" 
+                        aria-haspopup="dialog" 
+                        aria-controls="routine-period-dialog" 
+                        aria-expanded="false" 
+                        aria-labelledby="routine-period-label routine-period-value">
+                        <img src="assets/icons/calendar-icon.svg" alt="" width="24" height="24">
                         <span id="routine-period-value">미선택 시 삭제 전까지 반복됩니다</span>
                         <span aria-hidden="true">›</span>
                     </button>
-                </div>
+                </section>
 
-                <fieldset class="routine-form__field">
-                    <legend class="routine-form__label">
-                        반복주기
-                        <sup class="routine-form__required-mark" aria-hidden="true">*</sup>
-                    </legend>
-                    <div class="routine-form__choices routine-form__choices--repeat">
-                        <label class="routine-form__choice">
-                            <input type="radio" name="repeatType" value="daily" required checked>
-                            <span>매일</span>
-                        </label>
-                        <label class="routine-form__choice">
-                            <input type="radio" name="repeatType" value="weekdays" required>
-                            <span>평일</span>
-                        </label>
-                        <label class="routine-form__choice">
-                            <input type="radio" name="repeatType" value="weekends" required>
-                            <span>주말</span>
-                        </label>
-                        <label class="routine-form__choice">
-                            <input type="radio" id="repeat-weekly" name="repeatType" value="weekly" required>
-                            <span>주간</span>
-                        </label>
-                        <label class="routine-form__choice">
-                            <input type="radio" id="repeat-monthly" name="repeatType" value="monthly" required>
-                            <span>월간</span>
-                        </label>
-                    </div>
-
-                    <!-- 주간 반복 -->
-                    <div class="routine-form__repeat-details routine-form__repeat-details--weekly">
-                        <div class="routine-form__repeat-heading">
+                <!-- 반복 주기 -->
+                <section class="routine-form__field">
+                    <fieldset>
+                        <legend class="routine-form__label">
+                            반복 주기
+                            <sup class="routine-form__required-mark" aria-hidden="true">*</sup>
+                        </legend>
+                        <div class="routine-form__choices routine-form__choices--repeat">
+                            <label class="routine-form__choice">
+                                <input type="radio" name="repeatType" value="daily" required checked>
+                                <span>매일</span>
+                            </label>
+                            <label class="routine-form__choice">
+                                <input type="radio" name="repeatType" value="weekdays" required>
+                                <span>평일</span>
+                            </label>
+                            <label class="routine-form__choice">
+                                <input type="radio" name="repeatType" value="weekends" required>
+                                <span>주말</span>
+                            </label>
+                            <label class="routine-form__choice">
+                                <input type="radio" id="repeat-weekly" name="repeatType" value="weekly" required>
+                                <span>주간</span>
+                            </label>
+                            <label class="routine-form__choice">
+                                <input type="radio" id="repeat-monthly" name="repeatType" value="monthly" required>
+                                <span>월간</span>
+                            </label>
+                        </div>
+                    
+                        <!-- 주간 반복 -->
+                        <div class="routine-form__repeat-details routine-form__repeat-details--weekly">
                             <h3 class="routine-form__label" id="week-interval-heading">
                                 주간 반복
                             </h3>
-                            <div class="routine-form__week-interval">
-                                <button 
-                                type="button" 
-                                class="routine-form__week-interval-button"
-                                data-action="toggle-week-interval"
-                                aria-haspopup="listbox"
-                                aria-controls="week-interval-options"
-                                aria-expanded="false"
-                                aria-labelledby="week-interval-heading week-interval-value week-interval-unit">
-                                    <span id="week-interval-value">1</span>
-                                    <span class="routine-form__week-interval-arrow" aria-hidden="true">&lt;</span>
-                                </button>
-                                <span id="week-interval-unit">주마다</span>
-                                <ul id="week-interval-options" class="routine-form__week-interval-options" role="listbox" aria-label="주간 반복 간격(주)" tabindex="-1" hidden>
-                                    <li id="week-interval-option-1" role="option" data-value="1" aria-selected="true">1</li>
-                                    <li id="week-interval-option-2" role="option" data-value="2" aria-selected="false">2</li>
-                                    <li id="week-interval-option-3" role="option" data-value="3" aria-selected="false">3</li>
-                                    <li id="week-interval-option-4" role="option" data-value="4" aria-selected="false">4</li>
-                                    <li id="week-interval-option-5" role="option" data-value="5" aria-selected="false">5</li>
-                                    <li id="week-interval-option-6" role="option" data-value="6" aria-selected="false">6</li>
-                                    <li id="week-interval-option-7" role="option" data-value="7" aria-selected="false">7</li>
-                                    <li id="week-interval-option-8" role="option" data-value="8" aria-selected="false">8</li>
-                                    <li id="week-interval-option-9" role="option" data-value="9" aria-selected="false">9</li>
-                                    <li id="week-interval-option-10" role="option" data-value="10" aria-selected="false">10</li>
-                                    <li id="week-interval-option-11" role="option" data-value="11" aria-selected="false">11</li>
-                                    <li id="week-interval-option-12" role="option" data-value="12" aria-selected="false">12</li>
-                                </ul>
-                                <input type="hidden" name="weekInterval" value="1" disabled>
+                            <!-- 반응형 시작 — 주간 반복 간격과 요일 묶음의 줄바꿈 -->
+                            <div class="routine-form__weekly-controls">
+                                <div class="routine-form__week-interval">
+                                    <button 
+                                        type="button" 
+                                        class="routine-form__week-interval-button"
+                                        data-action="toggle-week-interval"
+                                        aria-haspopup="listbox"
+                                        aria-controls="week-interval-options"
+                                        aria-expanded="false"
+                                        aria-labelledby="week-interval-heading week-interval-value week-interval-unit">
+                                        <span id="week-interval-value">1</span>
+                                        <span class="routine-form__week-interval-arrow" aria-hidden="true">&lt;</span>
+                                    </button>
+                                    <span id="week-interval-unit">주마다</span>
+                                    <ul id="week-interval-options" class="routine-form__week-interval-options" role="listbox" aria-label="주간 반복 간격(주)" tabindex="-1" hidden>
+                                        <li id="week-interval-option-1" role="option" data-value="1" aria-selected="true">1</li>
+                                        <li id="week-interval-option-2" role="option" data-value="2" aria-selected="false">2</li>
+                                        <li id="week-interval-option-3" role="option" data-value="3" aria-selected="false">3</li>
+                                        <li id="week-interval-option-4" role="option" data-value="4" aria-selected="false">4</li>
+                                        <li id="week-interval-option-5" role="option" data-value="5" aria-selected="false">5</li>
+                                        <li id="week-interval-option-6" role="option" data-value="6" aria-selected="false">6</li>
+                                        <li id="week-interval-option-7" role="option" data-value="7" aria-selected="false">7</li>
+                                        <li id="week-interval-option-8" role="option" data-value="8" aria-selected="false">8</li>
+                                        <li id="week-interval-option-9" role="option" data-value="9" aria-selected="false">9</li>
+                                        <li id="week-interval-option-10" role="option" data-value="10" aria-selected="false">10</li>
+                                        <li id="week-interval-option-11" role="option" data-value="11" aria-selected="false">11</li>
+                                        <li id="week-interval-option-12" role="option" data-value="12" aria-selected="false">12</li>
+                                    </ul>
+                                    <input type="hidden" name="weekInterval" value="1" disabled>
+                                </div>
+                                <div class="routine-form__weekdays">
+                                    <fieldset disabled data-weekday-options>
+                                        <legend class="routine-add-page__sr-only">
+                                            반복할 요일
+                                        </legend>
+                                        <div class="routine-form__choices routine-form__choices--weekdays">
+                                            <label class="routine-form__choice">
+                                                <input type="checkbox" name="weekdays" value="mon" aria-label="월요일">
+                                                <span>월</span>
+                                            </label>
+                                            <label class="routine-form__choice">
+                                                <input type="checkbox" name="weekdays" value="tue" aria-label="화요일">
+                                                <span>화</span>
+                                            </label>
+                                            <label class="routine-form__choice">
+                                                <input type="checkbox" name="weekdays" value="wed" aria-label="수요일">
+                                                <span>수</span>
+                                            </label>
+                                            <label class="routine-form__choice">
+                                                <input type="checkbox" name="weekdays" value="thu" aria-label="목요일">
+                                                <span>목</span>
+                                            </label>
+                                            <label class="routine-form__choice">
+                                                <input type="checkbox" name="weekdays" value="fri" aria-label="금요일">
+                                                <span>금</span>
+                                            </label>
+                                            <label class="routine-form__choice">
+                                                <input type="checkbox" name="weekdays" value="sat" aria-label="토요일">
+                                                <span>토</span>
+                                            </label>
+                                            <label class="routine-form__choice">
+                                                <input type="checkbox" name="weekdays" value="sun" aria-label="일요일">
+                                                <span>일</span>
+                                            </label>
+                                        </div>
+                                    </fieldset>
+                                </div>
                             </div>
+                            <!-- 반응형 끝 -->
                         </div>
-                        <div class="routine-form__weekdays" data-weekday-inline>
-                            <fieldset disabled data-weekday-options>
+                    
+                        <!-- 월간 반복 -->
+                        <div class="routine-form__repeat-details routine-form__repeat-details--monthly">
+                            <h3 class="routine-form__label" id="month-interval-heading">
+                                월간 반복
+                            </h3>
+                            <!-- 반응형 시작 — 월간 반복 간격과 상세 선택 영역의 줄바꿈 -->
+                            <div class="routine-form__monthly-controls">
+                                <div class="routine-form__month-interval">
+                                    <button
+                                        type="button"
+                                        class="routine-form__month-interval-button"
+                                        data-action="toggle-month-interval"
+                                        aria-haspopup="listbox"
+                                        aria-controls="month-interval-options"
+                                        aria-expanded="false"
+                                        aria-labelledby="month-interval-heading month-interval-value month-interval-unit">
+                                        <span id="month-interval-value">1</span>
+                                        <span class="routine-form__month-interval-arrow" aria-hidden="true">&lt;</span>
+                                    </button>
+                                    <span id="month-interval-unit">개월마다</span>
+                                    <ul id="month-interval-options" class="routine-form__month-interval-options" role="listbox" aria-label="월간 반복 간격(개월)" tabindex="-1" hidden>
+                                        <li id="month-interval-option-1" role="option" data-value="1" aria-selected="true">1</li>
+                                        <li id="month-interval-option-2" role="option" data-value="2" aria-selected="false">2</li>
+                                        <li id="month-interval-option-3" role="option" data-value="3" aria-selected="false">3</li>
+                                        <li id="month-interval-option-4" role="option" data-value="4" aria-selected="false">4</li>
+                                        <li id="month-interval-option-5" role="option" data-value="5" aria-selected="false">5</li>
+                                        <li id="month-interval-option-6" role="option" data-value="6" aria-selected="false">6</li>
+                                        <li id="month-interval-option-7" role="option" data-value="7" aria-selected="false">7</li>
+                                        <li id="month-interval-option-8" role="option" data-value="8" aria-selected="false">8</li>
+                                        <li id="month-interval-option-9" role="option" data-value="9" aria-selected="false">9</li>
+                                        <li id="month-interval-option-10" role="option" data-value="10" aria-selected="false">10</li>
+                                        <li id="month-interval-option-11" role="option" data-value="11" aria-selected="false">11</li>
+                                        <li id="month-interval-option-12" role="option" data-value="12" aria-selected="false">12</li>
+                                    </ul>
+                                    <input type="hidden" name="monthInterval" value="1" disabled>
+                                </div>
+                                <fieldset class="routine-form__monthly-methods">
+                                    <legend class="routine-add-page__sr-only">
+                                        월간 반복 방식
+                                    </legend>
+                                    <!-- Method 1 - 일자 지정 -->
+                                    <div class="routine-form__monthly-method-row">
+                                        <label class="routine-form__monthly-method">
+                                            <input type="radio" name="monthlyMethod" value="dates" checked disabled>
+                                            <span class="routine-add-page__sr-only">일자 지정</span>
+                                        </label>
+                                        <button 
+                                            type="button" 
+                                            class="routine-form__date-picker"
+                                            data-action="open-monthly-dates"
+                                            aria-haspopup="dialog"
+                                            aria-controls="routine-monthly-date-dialog"
+                                            aria-expanded="false"
+                                            disabled>
+                                            <img src="assets/icons/calendar-icon.svg" alt="" width="16" height="16">
+                                            <span data-monthly-date-summary>일자 선택</span>
+                                            <span aria-hidden="true">&gt;</span>
+                                        </button>
+                                    </div>
+                                    <!-- Method 2 - 주차와 요일 선택 -->
+                                    <div class="routine-form__monthly-method-row">
+                                        <label class="routine-form__monthly-method">
+                                            <input type="radio" name="monthlyMethod" value="ordinal-weekday" disabled>
+                                            <span class="routine-add-page__sr-only">주차&middot;요일 지정</span>
+                                        </label>
+                                        <fieldset class="routine-form__monthly-selects" disabled>
+                                            <legend class="routine-add-page__sr-only">
+                                                월간 반복의 주차와 요일
+                                            </legend>
+                                            <div class="routine-form__dropdown">
+                                                <button 
+                                                    type="button" 
+                                                    class="routine-form__dropdown-button"
+                                                    data-action="toggle-month-week"
+                                                    aria-haspopup="listbox"
+                                                    aria-controls="month-week-options"
+                                                    aria-expanded="false">
+                                                    <span class="routine-add-page__sr-only">월간 반복 주차</span>
+                                                    <span id="month-week-value">첫째 주</span>
+                                                    <span class="routine-form__dropdown-arrow" aria-hidden="true">&lt;</span>
+                                                </button>
+                                                <ul id="month-week-options" class="routine-form__dropdown-options" role="listbox" aria-label="월간 반복 주차" tabindex="-1" hidden>
+                                                    <li id="month-week-option-1" role="option" data-value="1" aria-selected="true">첫째 주</li>
+                                                    <li id="month-week-option-2" role="option" data-value="2" aria-selected="false">둘째 주</li>
+                                                    <li id="month-week-option-3" role="option" data-value="3" aria-selected="false">셋째 주</li>
+                                                    <li id="month-week-option-4" role="option" data-value="4" aria-selected="false">넷째 주</li>
+                                                    <li id="month-week-option-last" role="option" data-value="last" aria-selected="false">마지막 주</li>
+                                                </ul>
+                                                <input type="hidden" name="monthWeek" value="1">
+                                            </div>
+                                            <div class="routine-form__dropdown">
+                                                <button 
+                                                    type="button" 
+                                                    class="routine-form__dropdown-button"
+                                                    data-action="toggle-month-weekday"
+                                                    aria-haspopup="listbox"
+                                                    aria-controls="month-weekday-options"
+                                                    aria-expanded="false">
+                                                    <span class="routine-add-page__sr-only">월간 반복 요일</span>
+                                                    <span id="month-weekday-value">월요일</span>
+                                                    <span class="routine-form__dropdown-arrow" aria-hidden="true">&lt;</span>
+                                                </button>
+                                                <ul id="month-weekday-options" class="routine-form__dropdown-options"
+                                                    role="listbox" aria-label="월간 반복 요일" tabindex="-1" hidden>
+                                                    <li id="month-weekday-option-mon" role="option" data-value="mon" aria-selected="true">월요일</li>
+                                                    <li id="month-weekday-option-tue" role="option" data-value="tue" aria-selected="false">화요일</li>
+                                                    <li id="month-weekday-option-wed" role="option" data-value="wed" aria-selected="false">수요일</li>
+                                                    <li id="month-weekday-option-thu" role="option" data-value="thu" aria-selected="false">목요일</li>
+                                                    <li id="month-weekday-option-fri" role="option" data-value="fri" aria-selected="false">금요일</li>
+                                                    <li id="month-weekday-option-sat" role="option" data-value="sat" aria-selected="false">토요일</li>
+                                                    <li id="month-weekday-option-sun" role="option" data-value="sun" aria-selected="false">일요일</li>
+                                                </ul>
+                                                <input type="hidden" name="monthWeekday" value="mon">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <!-- 반응형 끝 -->
+                        </div>
+                    </fieldset>
+                </section>
 
-                            </fieldset>
+                <!-- 시간대 -->
+                <section class="routine-form__field">
+                    <fieldset>
+                        <legend class="routine-form__label">시간대</legend>
+                        <div class="routine-form__choices routine-form__choices--time">
+                            <label class="routine-form__choice">
+                                <input type="radio" name="timeSlot" value="morning">
+                                <span>오전</span>
+                            </label>
+                            <label class="routine-form__choice">
+                                <input type="radio" name="timeSlot" value="afternoon">
+                                <span>오후</span>
+                            </label>
+                            <label class="routine-form__choice">
+                                <input type="radio" name="timeSlot" value="all-day" checked>
+                                <span>하루 종일</span>
+                            </label>
                         </div>
+                    </fieldset>
+                </section>
+
+                <!-- 태그 / **태그 관리 부분 통일 필요 -->
+                <section class="routine-form__field" aria-labelledby="routine-tags-title">
+                    <div class="routine-form__tag-heading">
+                        <h3 class="routine-form__label" id="routine-tags-title">태그</h3>
+                        <button 
+                        type="button"
+                        class="routine-form__tag-manage"
+                        data-action="manage-tags">
+                        태그 관리
+                        <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+                        </button>
                     </div>
-                </fieldset>
+                    <button
+                    type="button"
+                    class="routine-form__tag-add"
+                    data-action="add-tag"
+                    aria-label="태그 추가">
+                        <span aria-hidden="true">+</span>
+                    </button>
+                </section>
             </form>
         </main>
+        <!-- submit button -->
+        <footer class="routine-form__actions">
+            <button type="submit" class="routine-form__submit" form="routine-add-form">
+                루틴 생성하기
+            </button>
+        </footer>
     </div>
 </body>
 </html>
