@@ -45,7 +45,8 @@ body {
   width: 100%;
   height: 100%;
   background-color: #080a1f1c;
-  filter: blur(2px);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   font-family: var(--font-ko);
   font-size: var(--body-sm);
   color: var(--accent-cyan);

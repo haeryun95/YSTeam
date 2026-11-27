@@ -50,15 +50,17 @@
             </div>
             <div class="tag-bar">
                 <div class="tag-filters">
-                    <p>전체</p>
+                    <button type="button" class="tag-filter is-selected" data-action="filter-routines" data-tag-id="" aria-pressed="true">전체</button>
                 </div>
-                <button type="button" class="tag-manage">
+                <button type="button" class="tag-manage" data-action="open-tag-manager"
+                    aria-haspopup="dialog" aria-controls="tag-manager" aria-expanded="false">
                     <p class="tag-label">태그 관리</p>
                     <span class="material-symbols-outlined">
                         edit
                     </span>
                 </button>
             </div>
+            <p class="routine-filter-status" data-routine-filter-status role="status"></p>
             <section class="routine-section routine-section-pending">
                 <div class="section-pending">
                     <svg class="section-heading__line" viewBox="0 0 372 28" preserveAspectRatio="none"
@@ -69,7 +71,6 @@
                     <p class="section-count" aria-live="polite" aria-atomic="true">총 <span data-pending-count>4</span>개
                     </p>
                 </div>
-                <!-- 임시 목록: 추후 Service 데이터로 렌더링 -->
                 <ul class="routine-list" id="pending-list">
                     <li class="routine-card" data-routine-id="routine-1">
                         <button type="button" class="routine-card__complete" data-action="complete-routine"
@@ -128,7 +129,6 @@
                         <span class="section-toggle__icon" data-completed-toggle-icon aria-hidden="true">−</span>
                     </button>
                 </div>
-                <!-- 임시 목록: 추후 Service 데이터로 렌더링 -->
                 <ul class="routine-list" id="completed-list">
                     <li class="routine-card" data-routine-id="routine-5">
                         <button type="button" class="routine-card__complete" data-action="uncomplete-routine"
@@ -175,6 +175,15 @@
         </main>
     </div>
 
+    <div class="dim" data-routine-menu-dim hidden></div>
+    <div id="routine-menu" class="routine-menu" data-routine-menu role="menu" aria-label="루틴 관리" hidden>
+        <button type="button" class="routine-menu__item" data-action="edit-routine" role="menuitem">
+            <span>수정하기</span><span class="material-symbols-outlined" aria-hidden="true">edit_square</span>
+        </button>
+        <button type="button" class="routine-menu__item routine-menu__item--delete" data-action="delete-routine" role="menuitem">
+            <span>삭제하기</span><span class="material-symbols-outlined" aria-hidden="true">delete</span>
+        </button>
+    </div>
     <dialog id="routine-calendar" class="calendar-dialog" aria-label="날짜 선택">
         <div class="calendar-dialog__month">
             <button type="button" data-action="previous-month" aria-label="이전 달">‹</button>
@@ -191,7 +200,38 @@
             <button type="button" class="calendar-dialog__confirm" data-action="confirm-calendar">확인</button>
         </div>
     </dialog>
-    <div class="dim" hidden></div>
+    <dialog id="tag-manager" class="tag-manager" aria-labelledby="tag-manager-title">
+        <div class="tag-manager__panel">
+            <header class="tag-manager__header">
+                <button type="button" class="tag-manager__icon-button" data-action="close-tag-manager" aria-label="태그 관리에서 뒤로 가기">
+                    <span class="tag-arrow-back" aria-hidden="true">&lt;</span>
+                </button>
+                <h2 id="tag-manager-title">태그 관리</h2>
+            </header>
+            <div class="tag-manager__content">
+                <p class="tag-manager__status" data-tag-status role="status"></p>
+                <button type="button" class="tag-manager__retry" data-action="retry-tags" hidden>다시 시도</button>
+                <ul class="tag-manager__list" data-tag-list aria-label="태그 목록"></ul>
+            </div>
+            <footer class="tag-manager__footer">
+                <button type="button" class="tag-manager__add" data-action="add-tag">태그 추가하기</button>
+            </footer>
+        </div>
+        <div class="dim" data-tag-dim hidden></div>
+        <dialog class="tag-editor-dialog" data-tag-editor-dialog aria-labelledby="tag-editor-title">
+            <form class="tag-editor" data-tag-editor hidden>
+                <h3 id="tag-editor-title">태그 추가</h3>
+                <label class="tag-editor__label" for="tag-name">태그 이름</label>
+                <input id="tag-name" name="name" maxlength="15" required autocomplete="off" aria-describedby="tag-name-count tag-editor-error">
+                <p id="tag-name-count" class="tag-editor__count"><span data-tag-name-count>0</span>/15</p>
+                <p id="tag-editor-error" class="tag-editor__error" role="alert"></p>
+                <div class="tag-editor__actions">
+                    <button type="button" data-action="cancel-tag-edit">취소</button>
+                    <button type="submit">적용</button>
+                </div>
+            </form>
+        </dialog>
+    </dialog>
 </body>
 
 </html>
